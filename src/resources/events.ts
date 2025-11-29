@@ -14,6 +14,10 @@ export class Events {
     });
   }
 
+  retry(eventId: string) {
+    return this.http.post(`/v1/webhooks/${eventId}/retry`);
+  }
+
   get(eventId: string): Promise<SendEventResponse> {
     return this.http.get<SendEventResponse>(`/v1/events/${eventId}`);
   }

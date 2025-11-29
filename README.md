@@ -1,6 +1,6 @@
 # Relae Node SDK
 
-A lightweight, fully-typed Node.js SDK for interacting with the Relae Webhook Infrastructure API.
+A lightweight, fully-typed Node.js SDK for interacting with Relae.
 
 Relae helps developers deliver webhooks reliably with retries, observability, delivery logs, and endpoint management.
 
@@ -14,9 +14,9 @@ This SDK provides a simple interface for:
 ## 🚀 Installation
 
 ```bash
-npm install relaehook
+npm install relae
 # or
-yarn add relaehook
+yarn add relae
 ```
 
 ## 🔧 Setup
@@ -24,7 +24,7 @@ yarn add relaehook
 Import and initialize the client with your API key:
 
 ```javascript
-import { Relae } from "relaehook";
+import { Relae } from "relae";
 
 const client = new Relae({
   apiKey: process.env.RELAE_API_KEY!, // recommended
@@ -40,7 +40,7 @@ Send webhook events through Relae.
 ```javascript
 await client.events.send({
   event: "user.created",
-  destination: "endpoint_123",
+  destination: "destinationId",
   payload: {
     id: "u_123",
     email: "test@example.com",
@@ -53,59 +53,60 @@ The SDK automatically adds an `Idempotency-Key` header to prevent duplicate even
 ### Get an event
 
 ```javascript
-const evt = await client.events.get("evt_abc123");
+const evt = await client.events.get("eventId");
 console.log(evt);
 ```
 
-## 🔌 Endpoints API
-
-Endpoints represent webhook destinations where events should be delivered.
-
-### Create an endpoint
+### Retry an event
 
 ```javascript
-const endpoint = await client.endpoints.create({
+const retry = await client.events.retry("eventId");
+console.log(retry);
+```
+
+## 🔌 Destinations API
+
+Destinations tell Relae where events should be delivered.
+
+### Create a destination
+
+```javascript
+const destination = await client.destinations.create({
   url: "https://myapp.com/webhooks",
   description: "Main webhook handler",
 });
 ```
 
-### List endpoints
+### List destinations
 
 ```javascript
-const endpoints = await client.endpoints.list();
-console.log(endpoints.data);
+const destinations = await client.destinations.list();
+console.log(destinations.data);
 ```
 
-### Get an endpoint
+### Get a destination
 
 ```javascript
-const endpoint = await client.endpoints.get("endpoint_123");
+const destination = await client.destinations.get("destination_id");
 ```
 
-### Delete an endpoint
+### Delete a destination
 
 ```javascript
-await client.endpoints.delete("endpoint_123");
+await client.destinations.delete("destination_id");
 ```
 
 ## 🚚 Deliveries API
 
 Deliveries represent individual webhook delivery attempts (with retries).
 
+Deliveries let you see the historical trace for an event.
+
 ### Get a delivery
 
 ```javascript
 const delivery = await client.deliveries.get("del_123");
 ```
-
-### Retry a failed delivery
-
-```javascript
-await client.deliveries.retry("del_123");
-```
-
-This schedules a fresh delivery attempt for the event.
 
 ## ⚙️ Client Configuration
 
@@ -150,18 +151,18 @@ Generate API keys from your Relae dashboard.
 ## 🧪 Example Script
 
 ```javascript
-import { Relae } from "relaehook";
+import { Relae } from "relae";
 
 async function main() {
   const client = new Relae({ apiKey: process.env.RELAE_API_KEY! });
 
-  const endpoint = await client.endpoints.create({
+  const destination = await client.destinations.create({
     url: "https://myapp.com/webhooks",
   });
 
   const event = await client.events.send({
     event: "invoice.paid",
-    destination: endpoint.id,
+    destination: destination.id,
     payload: { amount: 2000 },
   });
 
