@@ -1,2 +1,182 @@
-# relae-node
-Relae SDK for Node
+# Relae Node SDK
+
+A lightweight, fully-typed Node.js SDK for interacting with the Relae Webhook Infrastructure API.
+
+Relae helps developers deliver webhooks reliably with retries, observability, delivery logs, and endpoint management.
+
+This SDK provides a simple interface for:
+
+- Sending events
+- Managing webhook endpoints
+- Inspecting deliveries
+- Retrying failed deliveries
+
+## 🚀 Installation
+
+```bash
+npm install relaehook
+# or
+yarn add relaehook
+```
+
+## 🔧 Setup
+
+Import and initialize the client with your API key:
+
+```javascript
+import { Relae } from "relaehook";
+
+const client = new Relae({
+  apiKey: process.env.RELAE_API_KEY!, // recommended
+});
+```
+
+## 📬 Events API
+
+Send webhook events through Relae.
+
+### Send an event
+
+```javascript
+await client.events.send({
+  event: "user.created",
+  destination: "endpoint_123",
+  payload: {
+    id: "u_123",
+    email: "test@example.com",
+  },
+});
+```
+
+The SDK automatically adds an `Idempotency-Key` header to prevent duplicate event creation.
+
+### Get an event
+
+```javascript
+const evt = await client.events.get("evt_abc123");
+console.log(evt);
+```
+
+## 🔌 Endpoints API
+
+Endpoints represent webhook destinations where events should be delivered.
+
+### Create an endpoint
+
+```javascript
+const endpoint = await client.endpoints.create({
+  url: "https://myapp.com/webhooks",
+  description: "Main webhook handler",
+});
+```
+
+### List endpoints
+
+```javascript
+const endpoints = await client.endpoints.list();
+console.log(endpoints.data);
+```
+
+### Get an endpoint
+
+```javascript
+const endpoint = await client.endpoints.get("endpoint_123");
+```
+
+### Delete an endpoint
+
+```javascript
+await client.endpoints.delete("endpoint_123");
+```
+
+## 🚚 Deliveries API
+
+Deliveries represent individual webhook delivery attempts (with retries).
+
+### Get a delivery
+
+```javascript
+const delivery = await client.deliveries.get("del_123");
+```
+
+### Retry a failed delivery
+
+```javascript
+await client.deliveries.retry("del_123");
+```
+
+This schedules a fresh delivery attempt for the event.
+
+## ⚙️ Client Configuration
+
+### Constructor Options
+
+```typescript
+interface RelaeClientOptions {
+  apiKey: string;
+  baseUrl?: string; // defaults to https://api.relaehook.com
+}
+```
+
+### Example
+
+```javascript
+const client = new Relae({
+  apiKey: "rel_live_123",
+  baseUrl: "http://localhost:8080", // optional, useful for dev
+});
+```
+
+## 📦 TypeScript Support
+
+The SDK is fully written in TypeScript and ships with complete type definitions.
+
+### Example
+
+```typescript
+const result: SendEventResponse = await client.events.send(...);
+```
+
+## 🔐 Authentication
+
+All requests use Bearer authentication:
+
+```
+Authorization: Bearer <api-key>
+```
+
+Generate API keys from your Relae dashboard.
+
+## 🧪 Example Script
+
+```javascript
+import { Relae } from "relaehook";
+
+async function main() {
+  const client = new Relae({ apiKey: process.env.RELAE_API_KEY! });
+
+  const endpoint = await client.endpoints.create({
+    url: "https://myapp.com/webhooks",
+  });
+
+  const event = await client.events.send({
+    event: "invoice.paid",
+    destination: endpoint.id,
+    payload: { amount: 2000 },
+  });
+
+  console.log("Event sent:", event);
+}
+
+main();
+```
+
+## 📄 License
+
+MIT License
+
+Copyright © 2025
+
+## 🙋 Need help?
+
+Contact support at <support@relaehook.com> or open an issue in the GitHub repo.

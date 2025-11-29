@@ -1,0 +1,25 @@
+{
+  "name": "relae",
+  "version": "0.1.0",
+  "description": "Official Node.js SDK for Relae",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WillBallentine/relae-node"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/node": "^20.19.25",
+    "jest": "^29.7.0",
+    "typescript": "^5.6.0"
+  }
+}
