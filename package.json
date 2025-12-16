@@ -1,25 +1,48 @@
 {
-  "name": "relae",
+  "name": "@relae/node",
   "version": "0.1.0",
   "description": "Official Node.js SDK for Relae",
   "main": "dist/index.js",
+  "author": "Relae",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/WillBallentine/relae-node"
   },
   "license": "MIT",
+  "homepage": "https://relaehook.com",
+  "keywords": [
+    "webhooks",
+    "reliability",
+    "retries",
+    "dead-letter",
+    "sdk"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/indes.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
-    "@types/node": "^20.19.25",
+    "@types/node": "^20.19.27",
     "jest": "^29.7.0",
-    "typescript": "^5.6.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

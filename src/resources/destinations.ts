@@ -1,18 +1,25 @@
-import { DestinationParams } from "../types";
-import { HttpClient } from "../util/http";
+import { HttpClient } from "../http";
+import {
+  DestinationInput,
+  DestinationListResponse,
+} from "../types/destinations";
 
-export class Destinations {
-  constructor(private http: HttpClient) {}
+export class DestinationsResource {
+  constructor(private client: HttpClient) {}
 
-  list() {
-    return this.http.get("/v1/destinations");
+  list(): Promise<DestinationListResponse> {
+    return this.client.request("GET", "/sdk/getdestinations");
   }
 
-  get(id: string) {
-    return this.http.get(`/v1/destinations/${id}`);
+  create(input: DestinationInput) {
+    return this.client.request("POST", "/sdk/adddestinations", input);
   }
 
-  create(params: DestinationParams): Promise<DestinationParams> {
-    return this.http.post("/v1/destinations", params, {});
+  update(id: string, input: Partial<DestinationInput>) {
+    return this.client.request("PUT", `/sdk/destinations/${id}`, input);
+  }
+
+  delete(id: string): Promise<void> {
+    return this.client.request("DELETE", `/sdk/destinations/${id}`);
   }
 }
