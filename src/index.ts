@@ -4,6 +4,8 @@ import { WebhooksResource } from "./resources/webhooks";
 import { DeadLetterResource } from "./resources/deadletter";
 import { Utils } from "./utils";
 
+export * from "./types";
+
 export class Relae {
   public destinations: DestinationsResource;
   public webhooks: WebhooksResource;

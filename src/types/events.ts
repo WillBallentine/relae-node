@@ -32,7 +32,3 @@ export interface PaginatedDeadLetterEvents {
   events: DeadLetterEvent[];
   next_cursor?: string;
 }
-
-export interface MultiRetryRequest {
-  events: string[];
-}

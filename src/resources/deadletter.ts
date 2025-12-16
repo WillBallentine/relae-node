@@ -1,9 +1,5 @@
 import { HttpClient } from "../http";
-import {
-  PaginatedDeadLetterEvents,
-  DeadLetterEvent,
-  MultiRetryRequest,
-} from "../types/events";
+import { PaginatedDeadLetterEvents, DeadLetterEvent } from "../types/events";
 
 export class DeadLetterResource {
   constructor(private client: HttpClient) {}
@@ -17,8 +13,8 @@ export class DeadLetterResource {
     return this.client.request("POST", `/sdk/webhooks/replay/${eventId}`);
   }
 
-  replayMulti(input: MultiRetryRequest): Promise<void> {
-    return this.client.request("POST", `/sdk/webhooks/replaymulti/`, input);
+  replayMulti(input: string[]): Promise<void> {
+    return this.client.request("POST", `/sdk/webhooks/replaymulti`, input);
   }
 
   async *all(): AsyncGenerator<DeadLetterEvent, void, unknown> {
