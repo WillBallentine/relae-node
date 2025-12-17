@@ -25,6 +25,20 @@ export interface DestinationInput {
   vendor_webhook_secret?: string;
 }
 
+export interface DestinationOutput {
+  id: string;
+  account_id: string;
+  source: string;
+  destination_url: string;
+  headers: Record<string, string>[];
+  vendor_webhook_secret?: string;
+  endpoint_token: string;
+  webhook_url: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface DestinationListResponse {
   destinations: Destination[];
 }

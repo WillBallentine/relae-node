@@ -1,5 +1,6 @@
 import { HttpClient } from "../http";
 import {
+  DestinationOutput,
   DestinationInput,
   DestinationListResponse,
 } from "../types/destinations";
@@ -11,8 +12,13 @@ export class DestinationsResource {
     return this.client.request("GET", "/sdk/getdestinations");
   }
 
-  create(input: DestinationInput) {
-    return this.client.request("POST", "/sdk/adddestinations", input);
+  create(input: DestinationInput | DestinationInput[]) {
+    const payload = Array.isArray(input) ? input : [input];
+    return this.client.request<DestinationOutput[]>(
+      "POST",
+      "/sdk/adddestinations",
+      payload,
+    );
   }
 
   update(id: string, input: Partial<DestinationInput>) {

@@ -1,6 +1,6 @@
 {
   "name": "@relae/node",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Official Node.js SDK for Relae",
   "main": "dist/index.js",
   "author": "Relae",
