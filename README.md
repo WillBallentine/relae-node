@@ -18,13 +18,13 @@ Official Node.js SDK for [Relae](https://relaehook.com) - A reliable webhook del
 ## Installation
 
 ```bash
-npm install relae
+npm install @relae/node
 ```
 
 or with yarn:
 
 ```bash
-yarn add relae
+yarn add @relae/node
 ```
 
 ## Quick Start
