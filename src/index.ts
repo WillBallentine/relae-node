@@ -5,6 +5,7 @@ import { DeadLetterResource } from "./resources/deadletter";
 import { Utils } from "./utils";
 
 export * from "./types";
+export * from "./utils";
 
 export class Relae {
   public destinations: DestinationsResource;

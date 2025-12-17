@@ -363,6 +363,7 @@ const isValid = Utils.verifyRelaeSignature(
   body: string,      // Raw request body as string
   signature: string, // X-Relae-Signature header value
   secret: string     // Your webhook secret
+  toleranceSec?: number // Optionsl: max age in seconds (default 300)
 ): boolean;
 ```
 
